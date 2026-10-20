@@ -38,14 +38,40 @@ function calcular(){
  document.getElementById('resto').textContent='Para el motociclista: Gs. '+Math.round(p*.8).toLocaleString('es-PY');
 }
 precio.addEventListener('input',calcular);
+
+
 function solicitar(){
- let n=document.getElementById('nombre').value.trim();
- let o=document.getElementById('origen').value.trim();
- let d=document.getElementById('destino').value.trim();
- if(!n||!o||!d){document.getElementById('mensaje').textContent='Completá tu nombre, origen y destino.';return;}
- document.getElementById('mensaje').textContent='¡Solicitud de prueba creada, '+n+'! Desde '+o+' hasta '+d+'. El pago sería en efectivo. Todavía no se envió a ningún motociclista.';
-}
-calcular();
+  const nombre = document.getElementById('nombre').value.trim();
+  const origen = document.getElementById('origen').value.trim();
+  const destino = document.getElementById('destino').value.trim();
+  const precio = Math.max(0, Number(document.getElementById('precio').value) || 0);
+
+  if (!nombre || !origen || !destino || precio <= 0) {
+    document.getElementById('mensaje').textContent =
+      'Completá tu nombre, origen, destino y precio estimado.';
+    return;
+  }
+
+  const comision = precio * 0.20;
+  const resto = precio - comision;
+  const texto = `Hola, quiero solicitar un viaje en Motoviajes.
+Pasajero: ${nombre}
+Origen: ${origen}
+Destino: ${destino}
+Precio estimado: Gs. ${precio.toLocaleString('es-PY')}
+Comisión Motoviajes (20%): Gs. ${comision.toLocaleString('es-PY')}
+Resto para el conductor: Gs. ${resto.toLocaleString('es-PY')}
+Pago: Efectivo`;
+
+  document.getElementById('mensaje').textContent =
+    'Abriendo WhatsApp para enviar tu solicitud...';
+
+  window.open(
+    'https://wa.me/595982271940?text=' + encodeURIComponent(texto),
+    '_blank'
+  );
+ }
+ calcular();
 </script>
 </body>
 </html>
