@@ -73,5 +73,48 @@ Pago: Efectivo`;
  }
  calcular();
 </script>
+ 
+<section id="registro-motociclistas" style="max-width:500px;margin:30px auto;padding:20px;border:1px solid #ddd;border-radius:12px;font-family:Arial,sans-serif">
+  <h2>🏍️ Registro de motociclistas</h2>
+  <p>Registra tus datos para recibir solicitudes de viaje.</p>
+
+  <form id="form-motociclista">
+    <label for="nombre-moto">Nombre del motociclista</label>
+    <input id="nombre-moto" type="text" required placeholder="Tu nombre" style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:8px 0 16px">
+
+    <label for="telefono-moto">WhatsApp (con código de país)</label>
+    <input id="telefono-moto" type="tel" required placeholder="595981234567" style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:8px 0 16px">
+
+    <label for="zona-moto">Zona donde trabajas</label>
+    <input id="zona-moto" type="text" required placeholder="Ej.: San Lorenzo" style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:8px 0 16px">
+
+    <button type="submit" style="width:100%;padding:14px;background:#16803c;color:white;border:0;border-radius:8px;font-weight:bold">
+      Contactar por WhatsApp
+    </button>
+  </form>
+</section>
+
+<script>
+document.getElementById("form-motociclista").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const nombre = document.getElementById("nombre-moto").value.trim();
+  const telefono = document.getElementById("telefono-moto").value.replace(/\D/g, "");
+  const zona = document.getElementById("zona-moto").value.trim();
+
+  if (!nombre || !telefono || !zona) {
+    alert("Completa todos los campos.");
+    return;
+  }
+
+  const mensaje = "Hola, quiero registrarme como motociclista en Motoviajes.%0A" +
+    "Nombre: " + encodeURIComponent(nombre) + "%0A" +
+    "WhatsApp: " + encodeURIComponent(telefono) + "%0A" +
+    "Zona: " + encodeURIComponent(zona);
+
+  window.open("https://wa.me/?text=" + mensaje, "_blank");
+});
+</script>
+ 
 </body>
 </html>
