@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motoviajes Asunción</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f0f4f8;margin:0;color:#183047}
+header{background:#123653;color:white;padding:24px;text-align:center}
+main{max-width:500px;margin:20px auto;padding:15px}
+.card{background:white;padding:20px;border-radius:16px;margin-bottom:16px;box-shadow:0 3px 12px #0001}
+label{display:block;margin-top:12px;font-weight:bold}
+input{box-sizing:border-box;width:100%;padding:12px;margin-top:6px;border:1px solid #ccd5df;border-radius:8px}
+button{width:100%;padding:14px;margin-top:16px;background:#ff941f;border:0;border-radius:9px;font-weight:bold;font-size:16px}
+.result{background:#e7f4ff;padding:14px;border-radius:10px;margin-top:14px}
+</style>
+</head>
+<body>
+<header><h1>🏍️ Motoviajes</h1><p>Tu viaje por Asunción</p></header>
+<main>
+<div class="card">
+<h2>Solicitar un viaje</h2>
+<label>Tu nombre</label><input id="nombre" placeholder="Tu nombre">
+<label>Desde</label><input id="origen" placeholder="Punto de partida">
+<label>Hasta</label><input id="destino" placeholder="Destino">
+<label>Precio estimado (Gs.)</label><input id="precio" type="number" min="0" value="20000">
+<div class="result"><b>Comisión Motoviajes (20%):</b><h2 id="comision">Gs. 4.000</h2><p id="resto">Para el motociclista: Gs. 16.000</p></div>
+<button onclick="solicitar()">Solicitar viaje de prueba</button>
+<p id="mensaje"></p>
+</div>
+<div class="card"><h3>Pago</h3><p>💵 Efectivo al motociclista</p><p>📍 Zona inicial: Asunción, Paraguay</p></div>
+</main>
+<script>
+const precio=document.getElementById('precio');
+function calcular(){
+ let p=Math.max(0,Number(precio.value)||0);
+ document.getElementById('comision').textContent='Gs. '+Math.round(p*.2).toLocaleString('es-PY');
+ document.getElementById('resto').textContent='Para el motociclista: Gs. '+Math.round(p*.8).toLocaleString('es-PY');
+}
+precio.addEventListener('input',calcular);
+function solicitar(){
+ let n=document.getElementById('nombre').value.trim();
+ let o=document.getElementById('origen').value.trim();
+ let d=document.getElementById('destino').value.trim();
+ if(!n||!o||!d){document.getElementById('mensaje').textContent='Completá tu nombre, origen y destino.';return;}
+ document.getElementById('mensaje').textContent='¡Solicitud de prueba creada, '+n+'! Desde '+o+' hasta '+d+'. El pago sería en efectivo. Todavía no se envió a ningún motociclista.';
+}
+calcular();
+</script>
+</body>
+</html>
